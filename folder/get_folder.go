@@ -22,6 +22,34 @@ func (f *driver) GetFoldersByOrgID(orgID uuid.UUID) []Folder {
 
 func (f *driver) GetAllChildFolders(orgID uuid.UUID, name string) []Folder {
 	// Your code here...
+	// 1 - Filter folders by the given orgID
+	folders := f.GetFoldersByOrgID(orgID)
 
+	// 2 - Filter the root by the given name
+
+	var rootFolder Folder
+
+	for _, folder := range folders {
+		if folder.Name == name {
+			rootFolder = folder
+			break
+		}
+	}
+
+	// If no folder found, return empty list
+	if rootFolder.Name == "" {
+		return []Folder{}
+	}
+
+	// 3 - Filter the children of the root folder
+	var children []Folder
+	for _, folder := range folders {
+		var isDifferentFromRoot bool = folder.Paths != rootFolder.Paths
+		var isNestedDeeper bool = len(folder.Paths) > len(rootFolder.Paths)
+		var isDescendantOfRoot bool = folder.Paths[:len(rootFolder.Paths)+1] == rootFolder.Paths+"."
+		if isDifferentFromRoot && isNestedDeeper && isDescendantOfRoot {
+			children = append(children, folder)
+		}
+	}
 	return []Folder{}
 }
