@@ -39,8 +39,8 @@ func Test_folder_GetFoldersByOrgID(t *testing.T) {
 			folder: "delta",
 			want:   []folder.Folder{},
 		},
-		// Type 3: Null folder
 		{
+			// Type 3: Null folder
 			name:   "Null folder",
 			orgID:  org1,
 			folder: "null",
