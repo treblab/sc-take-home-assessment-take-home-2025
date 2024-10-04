@@ -25,25 +25,24 @@ func Test_folder_GetFoldersByOrgID(t *testing.T) {
 		{
 			// TODO: your tests here
 			// Type 1: Test for root folder with children
-			name:   "1 . Root folder with children",
+			name:   "1 --- Root folder with children -------------------------------------------- 1",
 			orgID:  org1,
-			folder: "alpha",
+			folder: "enabled-professor-monster",
 			want: []folder.Folder{
-				{Name: "bravo", OrgId: org1, Paths: "alpha.bravo"},
-				{Name: "charlie", OrgId: org1, Paths: "alpha.bravo.charlie"},
-				{Name: "delta", OrgId: org1, Paths: "alpha.delta"},
+				{Name: "glowing-elongated", OrgId: org1, Paths: "stunning-horridus.sacred-moonstar.nearby-maestro.enabled-professor-monster.glowing-elongated"},
+				{Name: "equipped-hypno-hustler", OrgId: org1, Paths: "stunning-horridus.sacred-moonstar.nearby-maestro.enabled-professor-monster.equipped-hypno-hustler"},
 			},
 		},
 		{
 			// Type 2: Test for root folder with no children
-			name:   "2. Root folder with no children",
+			name:   "2 --- Root folder with no children -------------------------------------------- 2",
 			orgID:  org1,
 			folder: "equipped-hypno-hustler",
 			want:   []folder.Folder(nil),
 		},
 		{
 			// Type 3: Null folder
-			name:   "3. null",
+			name:   "3 --- null --------------------------------------------",
 			orgID:  org1,
 			folder: "null",
 			want:   []folder.Folder{},

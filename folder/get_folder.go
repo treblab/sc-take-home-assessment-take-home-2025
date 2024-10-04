@@ -44,6 +44,7 @@ func (f *driver) GetAllChildFolders(orgID uuid.UUID, name string) []Folder {
 
 	// If no folder found, return empty list
 	if rootFolder.Name == "" {
+		fmt.Println("Root folder not found")
 		return []Folder{}
 	}
 
