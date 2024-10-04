@@ -26,7 +26,6 @@ func (f *driver) GetAllChildFolders(orgID uuid.UUID, name string) []Folder {
 	folders := f.GetFoldersByOrgID(orgID)
 
 	// 2 - Filter the root by the given name
-
 	var rootFolder Folder
 
 	for _, folder := range folders {
@@ -44,12 +43,14 @@ func (f *driver) GetAllChildFolders(orgID uuid.UUID, name string) []Folder {
 	// 3 - Filter the children of the root folder
 	var children []Folder
 	for _, folder := range folders {
+		// Seperate bool flags for easier readability
 		var isDifferentFromRoot bool = folder.Paths != rootFolder.Paths
 		var isNestedDeeper bool = len(folder.Paths) > len(rootFolder.Paths)
 		var isDescendantOfRoot bool = folder.Paths[:len(rootFolder.Paths)+1] == rootFolder.Paths+"."
+		// Check conditions
 		if isDifferentFromRoot && isNestedDeeper && isDescendantOfRoot {
 			children = append(children, folder)
 		}
 	}
-	return []Folder{}
+	return children
 }
