@@ -1,6 +1,11 @@
 package folder
 
-import "github.com/gofrs/uuid"
+import (
+	"fmt"
+	"strings"
+
+	"github.com/gofrs/uuid"
+)
 
 func GetAllFolders() []Folder {
 	return GetSampleData()
@@ -29,8 +34,10 @@ func (f *driver) GetAllChildFolders(orgID uuid.UUID, name string) []Folder {
 	var rootFolder Folder
 
 	for _, folder := range folders {
+		// fmt.Println("Folder: ", folder.Name)
 		if folder.Name == name {
 			rootFolder = folder
+			fmt.Println("Root folder found: ", rootFolder)
 			break
 		}
 	}
@@ -43,12 +50,8 @@ func (f *driver) GetAllChildFolders(orgID uuid.UUID, name string) []Folder {
 	// 3 - Filter the children of the root folder
 	var children []Folder
 	for _, folder := range folders {
-		// Seperate bool flags for easier readability
-		var isDifferentFromRoot bool = folder.Paths != rootFolder.Paths
-		var isNestedDeeper bool = len(folder.Paths) > len(rootFolder.Paths)
-		var isDescendantOfRoot bool = folder.Paths[:len(rootFolder.Paths)+1] == rootFolder.Paths+"."
-		// Check conditions
-		if isDifferentFromRoot && isNestedDeeper && isDescendantOfRoot {
+		// Use strings.HasPrefix to check if folder.Paths starts with rootFolder.Paths + "."
+		if folder.Paths != rootFolder.Paths && strings.HasPrefix(folder.Paths, rootFolder.Paths+".") {
 			children = append(children, folder)
 		}
 	}

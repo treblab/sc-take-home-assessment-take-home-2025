@@ -1,5 +1,25 @@
 [
 	{
+		"name": "alpha",
+		"org_id": "38b9879b-f73b-4b0e-b9d9-4fc4c23643a7",
+		"paths": "alpha"
+	},
+	{
+		"name": "bravo",
+		"org_id": "38b9879b-f73b-4b0e-b9d9-4fc4c23643a7",
+		"paths": "alpha.bravo"
+	},
+	{
+		"name": "charlie",
+		"org_id": "38b9879b-f73b-4b0e-b9d9-4fc4c23643a7",
+		"paths": "alpha.bravo.charlie"
+	},	
+	{
+		"name": "delta",
+		"org_id": "38b9879b-f73b-4b0e-b9d9-4fc4c23643a7",
+		"paths": "alpha.delta"
+	},	
+	{
 		"name": "creative-scalphunter",
 		"org_id": "38b9879b-f73b-4b0e-b9d9-4fc4c23643a7",
 		"paths": "creative-scalphunter"
