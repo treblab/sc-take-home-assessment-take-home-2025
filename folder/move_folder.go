@@ -24,7 +24,7 @@ func (f *driver) MoveFolder(name string, dst string) ([]Folder, error) {
 		return []Folder{}, fmt.Errorf("folder not found")
 	}
 
-	// 2. Find all child folders of the folder/subbtree to be moved
+	// 2. Find all child folders of the folder/subtree to be moved
 	subtree = f.GetAllChildFolders(srcRoot.OrgId, srcRoot.Name)
 
 	// If no child folders found, return an error
