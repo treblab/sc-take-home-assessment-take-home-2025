@@ -25,12 +25,7 @@ func (f *driver) MoveFolder(name string, dst string) ([]Folder, error) {
 	}
 
 	// 2. Find all child folders of the folder/subbtree to be moved
-	srcPath := srcRoot.Paths
-	for _, folder := range f.folders {
-		if strings.HasPrefix(folder.Paths, srcPath+".") {
-			subtree = append(subtree, folder)
-		}
-	}
+	subtree = f.GetAllChildFolders(srcRoot.OrgId, srcRoot.Name)
 
 	// If no child folders found, return an error
 	if len(subtree) == 0 {
@@ -39,6 +34,7 @@ func (f *driver) MoveFolder(name string, dst string) ([]Folder, error) {
 
 	// 3. Validate the destination path
 	// Cannot move a folder to its own subtree
+	srcPath := srcRoot.Paths
 	if strings.HasPrefix(srcPath, dst) {
 		return []Folder{}, fmt.Errorf("cannot move a folder to its own subtree")
 	}
