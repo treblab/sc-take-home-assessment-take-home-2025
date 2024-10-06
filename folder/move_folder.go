@@ -49,6 +49,11 @@ func (f *driver) MoveFolder(name string, dst string) ([]Folder, error) {
 		return []Folder{}, fmt.Errorf("cannot move a folder to a different organisation")
 	}
 
+	// If the destination is within the subtree of the source, return an error **
+	if strings.HasPrefix(dstRoot.Paths, srcRoot.Paths+".") {
+		return []Folder{}, fmt.Errorf("cannot move a folder to its own subtree")
+	}
+
 	// 2. Find all child folders of the folder/subtree to be moved
 	subtree = append([]Folder{srcRoot}, f.GetAllChildFolders(srcRoot.OrgId, srcRoot.Name)...)
 

@@ -103,6 +103,34 @@ func Test_folder_MoveFolder(t *testing.T) {
 			},
 			expectedError: "destination folder not found",
 		},
+		{
+			name: "Move folder into its own descendant",
+			src:  "bravo",
+			dst:  "charlie",
+			want: []folder.Folder{
+				{Name: "alpha", OrgId: org1, Paths: "alpha"},
+				{Name: "bravo", OrgId: org1, Paths: "alpha.bravo"}, // No move due to invalid operation
+				{Name: "charlie", OrgId: org1, Paths: "alpha.bravo.charlie"},
+				{Name: "delta", OrgId: org1, Paths: "alpha.delta"},
+				{Name: "echo", OrgId: org1, Paths: "alpha.delta.echo"},
+				{Name: "foxtrot", OrgId: org2, Paths: "foxtrot"},
+			},
+			expectedError: "cannot move a folder to its own subtree",
+		},
+		{
+			name: "Move folder without children",
+			src:  "echo",
+			dst:  "bravo",
+			want: []folder.Folder{
+				{Name: "alpha", OrgId: org1, Paths: "alpha"},
+				{Name: "bravo", OrgId: org1, Paths: "alpha.bravo"},
+				{Name: "charlie", OrgId: org1, Paths: "alpha.bravo.charlie"},
+				{Name: "delta", OrgId: org1, Paths: "alpha.delta"},
+				{Name: "echo", OrgId: org1, Paths: "alpha.bravo.echo"}, // Moved echo to bravo
+				{Name: "foxtrot", OrgId: org2, Paths: "foxtrot"},
+			},
+			expectedError: "",
+		},
 	}
 
 	for _, tt := range tests {
