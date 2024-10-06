@@ -14,11 +14,6 @@ func GetAllFolders() []Folder {
 func (f *driver) GetFoldersByOrgID(orgID uuid.UUID) []Folder {
 	folders := f.folders
 
-	if len(folders) == 0 {
-		fmt.Println("Invalid orgID")
-		return nil
-	}
-
 	res := []Folder{}
 	for _, f := range folders {
 		if f.OrgId == orgID {
@@ -40,6 +35,12 @@ func (f *driver) GetAllChildFolders(orgID uuid.UUID, name string) []Folder {
 
 	// 1 - Filter folders by the given orgID
 	folders := f.GetFoldersByOrgID(orgID)
+
+	// Check if invalid orgID
+	if len(folders) == 0 {
+		fmt.Println("Invalid orgID")
+		return nil
+	}
 
 	// 2 - Filter the root by the given name
 	var rootFolder Folder
