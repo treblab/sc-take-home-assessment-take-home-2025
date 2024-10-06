@@ -1,7 +1,6 @@
 package folder
 
 import (
-	"fmt"
 	"strings"
 
 	"github.com/gofrs/uuid"
@@ -37,14 +36,14 @@ func (f *driver) GetAllChildFolders(orgID uuid.UUID, name string) []Folder {
 		// fmt.Println("Folder: ", folder.Name)
 		if folder.Name == name {
 			rootFolder = folder
-			fmt.Println("Root folder found: ", rootFolder)
+			// fmt.Println("Root folder found: ", rootFolder)
 			break
 		}
 	}
 
 	// If no folder found, return empty list
 	if rootFolder.Name == "" {
-		fmt.Println("Root folder not found")
+		// fmt.Println("Root folder not found")
 		return []Folder{}
 	}
 

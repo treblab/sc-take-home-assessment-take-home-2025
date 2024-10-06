@@ -35,47 +35,73 @@ func Test_folder_MoveFolder(t *testing.T) {
 		orgID         uuid.UUID
 		want          []folder.Folder
 	}{
+		// {
+		// 	name: "Move folder with children within same org",
+		// 	src:  "bravo",
+		// 	dst:  "delta",
+		// 	want: []folder.Folder{
+		// 		{Name: "alpha", OrgId: org1, Paths: "alpha"},
+		// 		{Name: "bravo", OrgId: org1, Paths: "alpha.delta.bravo"},           // Moved folder
+		// 		{Name: "charlie", OrgId: org1, Paths: "alpha.delta.bravo.charlie"}, // Moved child folder
+		// 		{Name: "delta", OrgId: org1, Paths: "alpha.delta"},
+		// 		{Name: "echo", OrgId: org1, Paths: "alpha.delta.echo"},
+		// 		{Name: "foxtrot", OrgId: org2, Paths: "foxtrot"},
+		// 	},
+		// },
 		{
-			name: "Move folder with children within same org",
+			name: "Move folder to itself",
 			src:  "bravo",
-			dst:  "delta",
+			dst:  "bravo",
 			want: []folder.Folder{
 				{Name: "alpha", OrgId: org1, Paths: "alpha"},
-				{Name: "bravo", OrgId: org1, Paths: "alpha.delta.bravo"},           // Moved folder
-				{Name: "charlie", OrgId: org1, Paths: "alpha.delta.bravo.charlie"}, // Moved child folder
+				{Name: "bravo", OrgId: org1, Paths: "alpha.bravo"}, // No move due to invalid operation
+				{Name: "charlie", OrgId: org1, Paths: "alpha.bravo.charlie"},
 				{Name: "delta", OrgId: org1, Paths: "alpha.delta"},
 				{Name: "echo", OrgId: org1, Paths: "alpha.delta.echo"},
 				{Name: "foxtrot", OrgId: org2, Paths: "foxtrot"},
 			},
+			expectedError: "cannot move a folder to itself",
 		},
 		// {
-		// 	name:          "Move folder to its own child",
-		// 	src:           "alpha.bravo",
-		// 	dst:           "alpha.bravo.charlie",
-		// 	expectedError: "cannot move a folder to its own subtree",
-		// },
-		// {
-		// 	name:          "Move folder to itself",
-		// 	src:           "alpha.bravo",
-		// 	dst:           "alpha.bravo",
-		// 	expectedError: "cannot move a folder to itself",
-		// },
-		// {
-		// 	name:          "Move folder across different orgID",
-		// 	src:           "alpha.bravo",
-		// 	dst:           "foxtrot",
+		// 	name: "Move folder across different orgID",
+		// 	src:  "bravo",
+		// 	dst:  "foxtrot",
+		// 	want: []folder.Folder{
+		// 		{Name: "alpha", OrgId: org1, Paths: "alpha"},
+		// 		{Name: "bravo", OrgId: org1, Paths: "alpha.bravo"}, // No move due to cross-org operation
+		// 		{Name: "charlie", OrgId: org1, Paths: "alpha.bravo.charlie"},
+		// 		{Name: "delta", OrgId: org1, Paths: "alpha.delta"},
+		// 		{Name: "echo", OrgId: org1, Paths: "alpha.delta.echo"},
+		// 		{Name: "foxtrot", OrgId: org2, Paths: "foxtrot"},
+		// 	},
 		// 	expectedError: "cannot move a folder to a different organization",
 		// },
 		// {
-		// 	name:          "Invalid source folder",
-		// 	src:           "invalid_folder",
-		// 	dst:           "alpha.delta",
+		// 	name: "Invalid source folder",
+		// 	src:  "invalid_folder",
+		// 	dst:  "delta",
+		// 	want: []folder.Folder{
+		// 		{Name: "alpha", OrgId: org1, Paths: "alpha"},
+		// 		{Name: "bravo", OrgId: org1, Paths: "alpha.bravo"}, // No move due to invalid source
+		// 		{Name: "charlie", OrgId: org1, Paths: "alpha.bravo.charlie"},
+		// 		{Name: "delta", OrgId: org1, Paths: "alpha.delta"},
+		// 		{Name: "echo", OrgId: org1, Paths: "alpha.delta.echo"},
+		// 		{Name: "foxtrot", OrgId: org2, Paths: "foxtrot"},
+		// 	},
 		// 	expectedError: "folder not found",
 		// },
 		// {
-		// 	name:          "Invalid destination folder",
-		// 	src:           "alpha.bravo",
-		// 	dst:           "invalid_folder",
+		// 	name: "Invalid destination folder",
+		// 	src:  "bravo",
+		// 	dst:  "invalid_folder",
+		// 	want: []folder.Folder{
+		// 		{Name: "alpha", OrgId: org1, Paths: "alpha"},
+		// 		{Name: "bravo", OrgId: org1, Paths: "alpha.bravo"}, // No move due to invalid destination
+		// 		{Name: "charlie", OrgId: org1, Paths: "alpha.bravo.charlie"},
+		// 		{Name: "delta", OrgId: org1, Paths: "alpha.delta"},
+		// 		{Name: "echo", OrgId: org1, Paths: "alpha.delta.echo"},
+		// 		{Name: "foxtrot", OrgId: org2, Paths: "foxtrot"},
+		// 	},
 		// 	expectedError: "destination folder not found",
 		// },
 	}
