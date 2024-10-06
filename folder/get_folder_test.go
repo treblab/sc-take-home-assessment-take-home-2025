@@ -15,6 +15,7 @@ func Test_folder_GetFoldersByOrgID(t *testing.T) {
 	// Load data from sample.json using GetSampleData
 	driver := folder.NewDriver(folder.GetSampleData())
 	org1 := uuid.Must(uuid.FromString("c1556e17-b7c0-45a3-a6ae-9546248fb17a")) // Using first orgID from sample data
+	org2 := uuid.Must(uuid.FromString("b1556e17-b7c0-45a3-a6ae-9546248fb17b")) // Incorrect orgID
 
 	tests := [...]struct {
 		name   string
@@ -24,7 +25,6 @@ func Test_folder_GetFoldersByOrgID(t *testing.T) {
 	}{
 		{
 			// TODO: your tests here
-			// Type 1: Test for root folder with children
 			name:   "Root folder with children - 1",
 			orgID:  org1,
 			folder: "enabled-professor-monster",
@@ -34,18 +34,28 @@ func Test_folder_GetFoldersByOrgID(t *testing.T) {
 			},
 		},
 		{
-			// Type 2: Test for root folder with no children
 			name:   "Root folder with no children - 2",
 			orgID:  org1,
 			folder: "equipped-hypno-hustler",
 			want:   []folder.Folder(nil),
 		},
 		{
-			// Type 3: Null folder
 			name:   "Null folder - 3",
 			orgID:  org1,
 			folder: "null",
-			want:   []folder.Folder{},
+			want:   []folder.Folder(nil),
+		},
+		{
+			name:   "Folder with incorrect orgID - 4",
+			orgID:  org2,
+			folder: "enabled-professor-monster",
+			want:   []folder.Folder(nil),
+		},
+		{
+			name:   "No folder name provided - 5",
+			orgID:  org1,
+			folder: "",
+			want:   []folder.Folder(nil),
 		},
 	}
 

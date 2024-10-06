@@ -1,6 +1,7 @@
 package folder
 
 import (
+	"fmt"
 	"strings"
 
 	"github.com/gofrs/uuid"
@@ -12,6 +13,11 @@ func GetAllFolders() []Folder {
 
 func (f *driver) GetFoldersByOrgID(orgID uuid.UUID) []Folder {
 	folders := f.folders
+
+	if len(folders) == 0 {
+		fmt.Println("Invalid orgID")
+		return nil
+	}
 
 	res := []Folder{}
 	for _, f := range folders {
@@ -26,6 +32,12 @@ func (f *driver) GetFoldersByOrgID(orgID uuid.UUID) []Folder {
 
 func (f *driver) GetAllChildFolders(orgID uuid.UUID, name string) []Folder {
 	// Your code here...
+
+	if name == "" {
+		fmt.Println("No folder name provided")
+		return nil
+	}
+
 	// 1 - Filter folders by the given orgID
 	folders := f.GetFoldersByOrgID(orgID)
 
@@ -41,7 +53,8 @@ func (f *driver) GetAllChildFolders(orgID uuid.UUID, name string) []Folder {
 
 	// If no folder found, return empty list
 	if rootFolder.Name == "" {
-		return []Folder{}
+		fmt.Println("Invalid folder")
+		return nil
 	}
 
 	// 3 - Filter the children of the root folder
