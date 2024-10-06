@@ -35,7 +35,7 @@ func Test_folder_MoveFolder(t *testing.T) {
 		want          []folder.Folder
 	}{
 		{
-			name: "Move folder with children within same org",
+			name: "Move folder with children within same org - 1",
 			src:  "bravo",
 			dst:  "delta",
 			want: []folder.Folder{
@@ -48,7 +48,7 @@ func Test_folder_MoveFolder(t *testing.T) {
 			},
 		},
 		{
-			name: "Move folder to itself",
+			name: "Move folder to itself - 2",
 			src:  "bravo",
 			dst:  "bravo",
 			want: []folder.Folder{
@@ -62,7 +62,7 @@ func Test_folder_MoveFolder(t *testing.T) {
 			expectedError: "cannot move a folder to itself",
 		},
 		{
-			name: "Move folder across different orgID",
+			name: "Move folder across different orgID - 3",
 			src:  "bravo",
 			dst:  "foxtrot",
 			want: []folder.Folder{
@@ -76,7 +76,7 @@ func Test_folder_MoveFolder(t *testing.T) {
 			expectedError: "cannot move a folder to a different organisation",
 		},
 		{
-			name: "Invalid source folder",
+			name: "Invalid source folder - 4",
 			src:  "invalid_folder",
 			dst:  "delta",
 			want: []folder.Folder{
@@ -90,7 +90,7 @@ func Test_folder_MoveFolder(t *testing.T) {
 			expectedError: "source folder not found",
 		},
 		{
-			name: "Invalid destination folder",
+			name: "Invalid destination folder - 5",
 			src:  "bravo",
 			dst:  "invalid_folder",
 			want: []folder.Folder{
@@ -104,7 +104,7 @@ func Test_folder_MoveFolder(t *testing.T) {
 			expectedError: "destination folder not found",
 		},
 		{
-			name: "Move folder into its own descendant",
+			name: "Move folder into its own descendant - 6",
 			src:  "bravo",
 			dst:  "charlie",
 			want: []folder.Folder{
@@ -118,7 +118,7 @@ func Test_folder_MoveFolder(t *testing.T) {
 			expectedError: "cannot move a folder to its own subtree",
 		},
 		{
-			name: "Move folder without children",
+			name: "Move folder without children - 7",
 			src:  "echo",
 			dst:  "bravo",
 			want: []folder.Folder{
@@ -132,7 +132,7 @@ func Test_folder_MoveFolder(t *testing.T) {
 			expectedError: "",
 		},
 		{
-			name: "Move folder to its own parent (no-op)",
+			name: "Move folder to its own parent (no-op) - 8",
 			src:  "charlie",
 			dst:  "bravo",
 			want: []folder.Folder{

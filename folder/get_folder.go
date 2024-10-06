@@ -33,24 +33,21 @@ func (f *driver) GetAllChildFolders(orgID uuid.UUID, name string) []Folder {
 	var rootFolder Folder
 
 	for _, folder := range folders {
-		// fmt.Println("Folder: ", folder.Name)
 		if folder.Name == name {
 			rootFolder = folder
-			// fmt.Println("Root folder found: ", rootFolder)
 			break
 		}
 	}
 
 	// If no folder found, return empty list
 	if rootFolder.Name == "" {
-		// fmt.Println("Root folder not found")
 		return []Folder{}
 	}
 
 	// 3 - Filter the children of the root folder
 	var children []Folder
 	for _, folder := range folders {
-		// Use strings.HasPrefix to check if folder.Paths starts with rootFolder.Paths + "."
+		// Check if folder.Paths starts with rootFolder.Paths + "."
 		if folder.Paths != rootFolder.Paths && strings.HasPrefix(folder.Paths, rootFolder.Paths+".") {
 			children = append(children, folder)
 		}
