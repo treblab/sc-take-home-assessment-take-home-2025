@@ -27,30 +27,25 @@ func (f *driver) MoveFolder(name string, dst string) ([]Folder, error) {
 	}
 
 	// Base cases:
-
-	// If the source folder is the same as the destination folder, return an error
-	if srcRoot.Paths == dstRoot.Paths {
-		// fmt.Println("Cannot move a folder to itself")
-		return f.folders, fmt.Errorf("cannot move a folder to itself")
-	}
-
-	// If the source folder is not found, return an error
-	if srcRoot.Name == "" {
+	switch {
+	case srcRoot.Name == "":
+		// If the source folder is not found
 		return []Folder{}, fmt.Errorf("source folder not found")
-	}
 
-	// If the destination folder is not found, return an error (if required)
-	if dstRoot.Name == "" {
+	case dstRoot.Name == "":
+		// If the destination folder is not found
 		return []Folder{}, fmt.Errorf("destination folder not found")
-	}
 
-	// If the source and destination folders belong to different organisations, return an error
-	if srcRoot.OrgId != dstRoot.OrgId {
+	case srcRoot.Paths == dstRoot.Paths:
+		// If the source folder is the same as the destination folder
+		return f.folders, fmt.Errorf("cannot move a folder to itself")
+
+	case srcRoot.OrgId != dstRoot.OrgId:
+		// If the source and destination folders belong to different organisations
 		return []Folder{}, fmt.Errorf("cannot move a folder to a different organisation")
-	}
 
-	// If the destination is within the subtree of the source, return an error **
-	if strings.HasPrefix(dstRoot.Paths, srcRoot.Paths+".") {
+	case strings.HasPrefix(dstRoot.Paths, srcRoot.Paths+"."):
+		// If trying to move a node to a child of itself
 		return []Folder{}, fmt.Errorf("cannot move a folder to its own subtree")
 	}
 
