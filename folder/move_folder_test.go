@@ -25,7 +25,7 @@ func getCustomSampleData() []folder.Folder {
 }
 
 func Test_folder_MoveFolder(t *testing.T) {
-	driver := folder.NewDriver(getCustomSampleData())
+	// driver := folder.NewDriver(getCustomSampleData())
 
 	tests := []struct {
 		name          string
@@ -35,19 +35,19 @@ func Test_folder_MoveFolder(t *testing.T) {
 		orgID         uuid.UUID
 		want          []folder.Folder
 	}{
-		// {
-		// 	name: "Move folder with children within same org",
-		// 	src:  "bravo",
-		// 	dst:  "delta",
-		// 	want: []folder.Folder{
-		// 		{Name: "alpha", OrgId: org1, Paths: "alpha"},
-		// 		{Name: "bravo", OrgId: org1, Paths: "alpha.delta.bravo"},           // Moved folder
-		// 		{Name: "charlie", OrgId: org1, Paths: "alpha.delta.bravo.charlie"}, // Moved child folder
-		// 		{Name: "delta", OrgId: org1, Paths: "alpha.delta"},
-		// 		{Name: "echo", OrgId: org1, Paths: "alpha.delta.echo"},
-		// 		{Name: "foxtrot", OrgId: org2, Paths: "foxtrot"},
-		// 	},
-		// },
+		{
+			name: "Move folder with children within same org",
+			src:  "bravo",
+			dst:  "delta",
+			want: []folder.Folder{
+				{Name: "alpha", OrgId: org1, Paths: "alpha"},
+				{Name: "bravo", OrgId: org1, Paths: "alpha.delta.bravo"},           // Moved folder
+				{Name: "charlie", OrgId: org1, Paths: "alpha.delta.bravo.charlie"}, // Moved child folder
+				{Name: "delta", OrgId: org1, Paths: "alpha.delta"},
+				{Name: "echo", OrgId: org1, Paths: "alpha.delta.echo"},
+				{Name: "foxtrot", OrgId: org2, Paths: "foxtrot"},
+			},
+		},
 		{
 			name: "Move folder to itself",
 			src:  "bravo",
@@ -62,52 +62,55 @@ func Test_folder_MoveFolder(t *testing.T) {
 			},
 			expectedError: "cannot move a folder to itself",
 		},
-		// {
-		// 	name: "Move folder across different orgID",
-		// 	src:  "bravo",
-		// 	dst:  "foxtrot",
-		// 	want: []folder.Folder{
-		// 		{Name: "alpha", OrgId: org1, Paths: "alpha"},
-		// 		{Name: "bravo", OrgId: org1, Paths: "alpha.bravo"}, // No move due to cross-org operation
-		// 		{Name: "charlie", OrgId: org1, Paths: "alpha.bravo.charlie"},
-		// 		{Name: "delta", OrgId: org1, Paths: "alpha.delta"},
-		// 		{Name: "echo", OrgId: org1, Paths: "alpha.delta.echo"},
-		// 		{Name: "foxtrot", OrgId: org2, Paths: "foxtrot"},
-		// 	},
-		// 	expectedError: "cannot move a folder to a different organization",
-		// },
-		// {
-		// 	name: "Invalid source folder",
-		// 	src:  "invalid_folder",
-		// 	dst:  "delta",
-		// 	want: []folder.Folder{
-		// 		{Name: "alpha", OrgId: org1, Paths: "alpha"},
-		// 		{Name: "bravo", OrgId: org1, Paths: "alpha.bravo"}, // No move due to invalid source
-		// 		{Name: "charlie", OrgId: org1, Paths: "alpha.bravo.charlie"},
-		// 		{Name: "delta", OrgId: org1, Paths: "alpha.delta"},
-		// 		{Name: "echo", OrgId: org1, Paths: "alpha.delta.echo"},
-		// 		{Name: "foxtrot", OrgId: org2, Paths: "foxtrot"},
-		// 	},
-		// 	expectedError: "folder not found",
-		// },
-		// {
-		// 	name: "Invalid destination folder",
-		// 	src:  "bravo",
-		// 	dst:  "invalid_folder",
-		// 	want: []folder.Folder{
-		// 		{Name: "alpha", OrgId: org1, Paths: "alpha"},
-		// 		{Name: "bravo", OrgId: org1, Paths: "alpha.bravo"}, // No move due to invalid destination
-		// 		{Name: "charlie", OrgId: org1, Paths: "alpha.bravo.charlie"},
-		// 		{Name: "delta", OrgId: org1, Paths: "alpha.delta"},
-		// 		{Name: "echo", OrgId: org1, Paths: "alpha.delta.echo"},
-		// 		{Name: "foxtrot", OrgId: org2, Paths: "foxtrot"},
-		// 	},
-		// 	expectedError: "destination folder not found",
-		// },
+		{
+			name: "Move folder across different orgID",
+			src:  "bravo",
+			dst:  "foxtrot",
+			want: []folder.Folder{
+				{Name: "alpha", OrgId: org1, Paths: "alpha"},
+				{Name: "bravo", OrgId: org1, Paths: "alpha.bravo"}, // No move due to cross-org operation
+				{Name: "charlie", OrgId: org1, Paths: "alpha.bravo.charlie"},
+				{Name: "delta", OrgId: org1, Paths: "alpha.delta"},
+				{Name: "echo", OrgId: org1, Paths: "alpha.delta.echo"},
+				{Name: "foxtrot", OrgId: org2, Paths: "foxtrot"},
+			},
+			expectedError: "cannot move a folder to a different organization",
+		},
+		{
+			name: "Invalid source folder",
+			src:  "invalid_folder",
+			dst:  "delta",
+			want: []folder.Folder{
+				{Name: "alpha", OrgId: org1, Paths: "alpha"},
+				{Name: "bravo", OrgId: org1, Paths: "alpha.bravo"}, // No move due to invalid source
+				{Name: "charlie", OrgId: org1, Paths: "alpha.bravo.charlie"},
+				{Name: "delta", OrgId: org1, Paths: "alpha.delta"},
+				{Name: "echo", OrgId: org1, Paths: "alpha.delta.echo"},
+				{Name: "foxtrot", OrgId: org2, Paths: "foxtrot"},
+			},
+			expectedError: "folder not found",
+		},
+		{
+			name: "Invalid destination folder",
+			src:  "bravo",
+			dst:  "invalid_folder",
+			want: []folder.Folder{
+				{Name: "alpha", OrgId: org1, Paths: "alpha"},
+				{Name: "bravo", OrgId: org1, Paths: "alpha.bravo"}, // No move due to invalid destination
+				{Name: "charlie", OrgId: org1, Paths: "alpha.bravo.charlie"},
+				{Name: "delta", OrgId: org1, Paths: "alpha.delta"},
+				{Name: "echo", OrgId: org1, Paths: "alpha.delta.echo"},
+				{Name: "foxtrot", OrgId: org2, Paths: "foxtrot"},
+			},
+			expectedError: "destination folder not found",
+		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
+			// Reinitialize the driver for each test case
+			driver := folder.NewDriver(getCustomSampleData())
+
 			got, err := driver.MoveFolder(tt.src, tt.dst)
 
 			if tt.expectedError != "" {
