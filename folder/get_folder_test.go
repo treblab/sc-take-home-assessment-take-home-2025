@@ -57,6 +57,12 @@ func Test_folder_GetFoldersByOrgID(t *testing.T) {
 			folder: "",
 			want:   []folder.Folder(nil),
 		},
+		{
+			name:   "Case sensitivity check - 6",
+			orgID:  org1,
+			folder: "Enabled-Professor-Monster",
+			want:   []folder.Folder(nil),
+		},
 	}
 
 	for _, tt := range tests {
