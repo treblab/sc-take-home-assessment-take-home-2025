@@ -52,13 +52,13 @@ func (f *driver) MoveFolder(name string, dst string) ([]Folder, error) {
 		return []Folder{}, fmt.Errorf("no child folders found")
 	}
 
-	// 4. Move the subtree to the destination
+	// 3. Move the subtree to the destination
 	for i, folder := range subtree {
 		newPath := strings.Replace(folder.Paths, srcRoot.Paths, dstRoot.Paths+"."+srcRoot.Name, 1)
 		subtree[i].Paths = newPath
 	}
 
-	// 5. Update the original folder list with moved folders
+	// 4. Update the original folder list with moved folders
 	for i, folder := range f.folders {
 		for _, movedFolder := range subtree {
 			if folder.Name == movedFolder.Name {
@@ -67,6 +67,6 @@ func (f *driver) MoveFolder(name string, dst string) ([]Folder, error) {
 		}
 	}
 
-	// 6. Return the updated folders
+	// 5. Return the updated folders
 	return f.folders, nil
 }
