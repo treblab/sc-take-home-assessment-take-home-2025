@@ -8,6 +8,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// Set 2 different orgIDs for testing
 var org1 = uuid.Must(uuid.FromString("38b9879b-f73b-4b0e-b9d9-4fc4c23643a7"))
 var org2 = uuid.Must(uuid.FromString("38b9879b-f73b-4b0e-b9d9-4fc4c23643a8"))
 
