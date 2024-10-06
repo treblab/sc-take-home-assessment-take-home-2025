@@ -11,7 +11,7 @@ func (f *driver) MoveFolder(name string, dst string) ([]Folder, error) {
 	var dstRoot Folder
 	var subtree []Folder
 
-	// 1. Locate the folder to be moved and the destination folder
+	// 1. Locate the paths of folder to be moved (src) and the dest folder
 	for _, folder := range f.folders {
 		if folder.Name == name {
 			srcRoot = folder
