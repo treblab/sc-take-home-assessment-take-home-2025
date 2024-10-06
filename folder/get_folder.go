@@ -22,7 +22,6 @@ func (f *driver) GetFoldersByOrgID(orgID uuid.UUID) []Folder {
 	}
 
 	return res
-
 }
 
 func (f *driver) GetAllChildFolders(orgID uuid.UUID, name string) []Folder {
@@ -66,5 +65,6 @@ func (f *driver) GetAllChildFolders(orgID uuid.UUID, name string) []Folder {
 			children = append(children, folder)
 		}
 	}
+
 	return children
 }
