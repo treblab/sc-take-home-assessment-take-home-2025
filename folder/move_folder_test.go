@@ -131,6 +131,20 @@ func Test_folder_MoveFolder(t *testing.T) {
 			},
 			expectedError: "",
 		},
+		{
+			name: "Move folder to its own parent (no-op)",
+			src:  "charlie",
+			dst:  "bravo",
+			want: []folder.Folder{
+				{Name: "alpha", OrgId: org1, Paths: "alpha"},
+				{Name: "bravo", OrgId: org1, Paths: "alpha.bravo"},
+				{Name: "charlie", OrgId: org1, Paths: "alpha.bravo.charlie"}, // No move because it's already under bravo
+				{Name: "delta", OrgId: org1, Paths: "alpha.delta"},
+				{Name: "echo", OrgId: org1, Paths: "alpha.delta.echo"},
+				{Name: "foxtrot", OrgId: org2, Paths: "foxtrot"},
+			},
+			expectedError: "",
+		},
 	}
 
 	for _, tt := range tests {
