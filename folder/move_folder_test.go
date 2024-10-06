@@ -25,8 +25,6 @@ func getCustomSampleData() []folder.Folder {
 }
 
 func Test_folder_MoveFolder(t *testing.T) {
-	// driver := folder.NewDriver(getCustomSampleData())
-
 	tests := []struct {
 		name          string
 		src           string
