@@ -72,7 +72,7 @@ func Test_folder_MoveFolder(t *testing.T) {
 				{Name: "echo", OrgId: org1, Paths: "alpha.delta.echo"},
 				{Name: "foxtrot", OrgId: org2, Paths: "foxtrot"},
 			},
-			expectedError: "cannot move a folder to a different organization",
+			expectedError: "cannot move a folder to a different organisation",
 		},
 		{
 			name: "Invalid source folder",
@@ -86,7 +86,7 @@ func Test_folder_MoveFolder(t *testing.T) {
 				{Name: "echo", OrgId: org1, Paths: "alpha.delta.echo"},
 				{Name: "foxtrot", OrgId: org2, Paths: "foxtrot"},
 			},
-			expectedError: "folder not found",
+			expectedError: "source folder not found",
 		},
 		{
 			name: "Invalid destination folder",
