@@ -18,11 +18,10 @@ func Test_folder_GetFoldersByOrgID(t *testing.T) {
 	org2 := uuid.Must(uuid.FromString("b1556e17-b7c0-45a3-a6ae-9546248fb17b")) // Incorrect orgID
 
 	tests := [...]struct {
-		name          string
-		orgID         uuid.UUID
-		folder        string // changed to string - was originally []folder.Folder
-		want          []folder.Folder
-		expectedError string
+		name   string
+		orgID  uuid.UUID
+		folder string // changed to string - was originally []folder.Folder
+		want   []folder.Folder
 	}{
 		{
 			// TODO: your tests here
@@ -40,27 +39,23 @@ func Test_folder_GetFoldersByOrgID(t *testing.T) {
 			folder: "equipped-hypno-hustler",
 			want:   []folder.Folder(nil),
 		},
-
 		{
-			name:          "Null folder - 3",
-			orgID:         org1,
-			folder:        "null",
-			want:          []folder.Folder(nil),
-			expectedError: "Folder not found",
+			name:   "Null folder - 3",
+			orgID:  org1,
+			folder: "null",
+			want:   []folder.Folder(nil),
 		},
 		{
-			name:          "Folder with incorrect orgID - 4",
-			orgID:         org2,
-			folder:        "enabled-professor-monster",
-			want:          []folder.Folder(nil),
-			expectedError: "Invalid orgID",
+			name:   "Folder with incorrect orgID - 4",
+			orgID:  org2,
+			folder: "enabled-professor-monster",
+			want:   []folder.Folder(nil),
 		},
 		{
-			name:          "No folder name provided - 5",
-			orgID:         org1,
-			folder:        "",
-			want:          []folder.Folder(nil),
-			expectedError: "No folder name provided",
+			name:   "No folder name provided - 5",
+			orgID:  org1,
+			folder: "",
+			want:   []folder.Folder(nil),
 		},
 	}
 
