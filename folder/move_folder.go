@@ -21,7 +21,6 @@ func (f *driver) MoveFolder(name string, dst string) ([]Folder, error) {
 		}
 		// Break early if both folders are found
 		if srcRoot.Name != "" && dstRoot.Name != "" {
-			// fmt.Println(srcRoot.Name, dstRoot.Name)
 			break
 		}
 	}
@@ -51,11 +50,6 @@ func (f *driver) MoveFolder(name string, dst string) ([]Folder, error) {
 
 	// 2. Find all child folders of the folder/subtree to be moved
 	subtree = append([]Folder{srcRoot}, f.GetAllChildFolders(srcRoot.OrgId, srcRoot.Name)...)
-
-	// If no child folders found, return a message
-	if len(subtree) == 0 {
-		fmt.Println("No child folders found")
-	}
 
 	// 3. Move the subtree to the destination
 	for i, folder := range subtree {
